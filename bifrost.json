@@ -49,9 +49,11 @@
                     "wsPort": 9988,
                     "port": 31200,
                     "flags": [
+                        "--unsafe-ws-external",
+                        "--unsafe-rpc-external",
+                        "--rpc-cors=all",
                         "--alice",
                         "--force-authoring",
-                        "-ldebug",
                         "--",
                         "--execution=wasm"
                     ]
@@ -59,30 +61,25 @@
             ]
         },
         {
-            "bin": "../cumulus/target/release/polkadot-collator",
+            "bin": "../bifrost/target/release/bifrost",
             "id": "300",
             "balance": "1000000000000000000000",
+            "chain": "bifrost-local",
             "nodes": [
                 {
                     "wsPort": 9999,
                     "port": 31300,
                     "flags": [
+                        "--unsafe-ws-external",
+                        "--unsafe-rpc-external",
+                        "--rpc-cors=all",
                         "--alice",
                         "--force-authoring",
-                        "-ldebug",
                         "--",
                         "--execution=wasm"
                     ]
                 }
             ]
-        }
-    ],
-    "simpleParachains": [
-        {
-            "bin": "../cumulus/target/release/polkadot-collator",
-            "id": "400",
-            "port": "31400",
-            "balance": "1000000000000000000000"
         }
     ],
     "hrmpChannels": [
