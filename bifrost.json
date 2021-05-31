@@ -52,8 +52,6 @@
                         "--unsafe-ws-external",
                         "--unsafe-rpc-external",
                         "--rpc-cors=all",
-                        "--alice",
-                        "--force-authoring",
                         "--",
                         "--execution=wasm"
                     ]
@@ -73,8 +71,6 @@
                         "--unsafe-ws-external",
                         "--unsafe-rpc-external",
                         "--rpc-cors=all",
-                        "--alice",
-                        "--force-authoring",
                         "--",
                         "--execution=wasm"
                     ]

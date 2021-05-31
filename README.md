@@ -34,10 +34,10 @@ cp ./target/release/polkadot ../polkadot-launch/bin/polkadot-relaychain
 and
 
 ```
-git clone https://github.com/paritytech/cumulus
-cd cumulus
-cargo build --release -p polkadot-parachain
-cp ./target/release/polkadot-parachain ../polkadot-launch/bin/polkadot-parachain
+git clone https://github.com/bifrost-finance/bifrost
+cd bifrost
+make build-all-release
+cp ./target/release/bifrost ../polkadot-launch/bin/polkadot-parachain
 ```
 
 ## Use
