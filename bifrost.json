@@ -29,11 +29,15 @@
                 "port": 30777
             }
         ],
-        "runtime_genesis_config": {
-            "parachainsConfiguration": {
-                "config": {
-                    "validation_upgrade_frequency": 1,
-                    "validation_upgrade_delay": 1
+        "genesis": {
+            "runtime": {
+                "runtime_genesis_config": {
+                    "parachainsConfiguration": {
+                        "config": {
+                            "validation_upgrade_frequency": 1,
+                            "validation_upgrade_delay": 1
+                        }
+                    }
                 }
             }
         }
@@ -48,6 +52,7 @@
                 {
                     "wsPort": 9988,
                     "port": 31200,
+                    "name": "alice",
                     "flags": [
                         "--unsafe-ws-external",
                         "--unsafe-rpc-external",
@@ -55,6 +60,12 @@
                         "--",
                         "--execution=wasm"
                     ]
+                },
+                {
+                    "wsPort": 9989,
+                    "port": 31201,
+                    "name": "bob",
+                    "flags": ["--", "--execution=wasm"]
                 }
             ]
         },
@@ -67,6 +78,7 @@
                 {
                     "wsPort": 9999,
                     "port": 31300,
+                    "name": "alice",
                     "flags": [
                         "--unsafe-ws-external",
                         "--unsafe-rpc-external",
