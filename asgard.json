@@ -1,0 +1,82 @@
+{
+    "relaychain": {
+        "bin": "../polkadot/target/release/polkadot",
+        "chain": "kusama-local",
+        "nodes": [
+            {
+                "name": "alice",
+                "wsPort": 9944,
+                "port": 30444,
+                "flags": [
+                    "--unsafe-ws-external",
+                    "--unsafe-rpc-external",
+                    "--rpc-cors=all"
+                ]
+            },
+            {
+                "name": "bob",
+                "wsPort": 9955,
+                "port": 30555
+            },
+            {
+                "name": "charlie",
+                "wsPort": 9966,
+                "port": 30666
+            },
+            {
+                "name": "dave",
+                "wsPort": 9977,
+                "port": 30777
+            }
+        ],
+        "genesis": {
+            "runtime": {
+                "runtime_genesis_config": {
+                    "parachainsConfiguration": {
+                        "config": {
+                            "validation_upgrade_frequency": 1,
+                            "validation_upgrade_delay": 1
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "parachains": [
+        {
+            "bin": "../bifrost-prod/target/release/bifrost",
+            "id": "2001",
+            "balance": "1000000000000000000000",
+            "chain": "asgard-local",
+            "nodes": [
+                {
+                    "wsPort": 9988,
+                    "port": 30888,
+                    "flags": [
+                        "--unsafe-ws-external",
+                        "--unsafe-rpc-external",
+                        "--rpc-cors=all",
+                        "--",
+                        "--execution=wasm"
+                    ]
+                },
+                {
+                    "wsPort": 9999,
+                    "port": 30999,
+                    "name": "bob",
+                    "flags": [
+                        "--unsafe-ws-external",
+                        "--unsafe-rpc-external",
+                        "--rpc-cors=all",
+                        "-ldebug",
+                        "--ws-max-connections",
+                        5000
+                    ]
+                }
+            ]
+        }
+    ],
+    "hrmpChannels": [],
+    "types": {},
+    "finalization": false
+}
