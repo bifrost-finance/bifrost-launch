@@ -32,7 +32,7 @@
         "genesis": {
             "runtime": {
                 "runtime_genesis_config": {
-                    "parachainsConfiguration": {
+                    "configuration": {
                         "config": {
                             "validation_upgrade_frequency": 1,
                             "validation_upgrade_delay": 1
@@ -57,6 +57,7 @@
                         "--unsafe-ws-external",
                         "--unsafe-rpc-external",
                         "--rpc-cors=all",
+                        "--force-authoring",
                         "--",
                         "--execution=wasm"
                     ]
@@ -83,6 +84,7 @@
                         "--unsafe-ws-external",
                         "--unsafe-rpc-external",
                         "--rpc-cors=all",
+                        "--force-authoring",
                         "--",
                         "--execution=wasm"
                     ]
@@ -90,14 +92,8 @@
             ]
         }
     ],
-    "hrmpChannels": [
-        {
-            "sender": 200,
-            "recipient": 300,
-            "maxCapacity": 8,
-            "maxMessageSize": 512
-        }
-    ],
+    "simpleParachains": [],
+    "hrmpChannels": [],
     "types": {},
     "finalization": false
 }
