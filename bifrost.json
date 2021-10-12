@@ -66,7 +66,7 @@
                     "wsPort": 9989,
                     "port": 31201,
                     "name": "bob",
-                    "flags": ["--", "--execution=wasm"]
+                    "flags": ["--force-authoring","--", "--execution=wasm"]
                 }
             ]
         },
