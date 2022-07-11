@@ -17,15 +17,18 @@ npm i polkadot-launch -g
 ## Binary Files
 
 To use polkadot-launch, you need to have binary files for a `polkadot` relay chain and a
-`bifrost`.
+`polkadot-parachain` in the bin folder.
 
-You can generate these files by cloning the `release-v0.9.3` branch of these projects and building them
-with the specific flags below:
+> If you are on an Apple M1 ARM chip, make sure you are using the `stable-aarch64-apple-darwin` toolchain to compile the binaries.
+
+You can generate these files by cloning the `rococo-v1` branch of these projects in the same root as the polkadot-launch repo
+and building them with the specific flags below:
 
 ```bash
-git clone -b release-v0.9.3 https://github.com/paritytech/polkadot
+git clone https://github.com/paritytech/polkadot
 cd polkadot
 cargo build --release
+cp ./target/release/polkadot ../polkadot-launch/bin/polkadot-relaychain
 ```
 
 and
@@ -34,19 +37,25 @@ and
 git clone https://github.com/bifrost-finance/bifrost
 cd bifrost
 make build-all-release
+cp ./target/release/bifrost ../polkadot-launch/bin/polkadot-parachain
 ```
 
 ## Use
 
 ```bash
-polkadot-launch bifrost.json
+polkadot-launch config.json
 ```
 
 ### Configuration File
 
 The required configuration file defines the properties of the network you want to set up.
+You may use a json or a js file.
 
-You can see an example [here](config.json).
+You can see the examples:
+- [config.json](config.json)
+- [config.js](config.js)
+
+You may find the .js alternative more convenient if you need comments, trailing commas or if you prefer do dedup some portions of the config.
 
 #### `relaychain`
 
@@ -57,6 +66,7 @@ You can see an example [here](config.json).
   - `name`: Must be one of `alice`, `bob`, `charlie`, or `dave`.
   - `wsPort`: The websocket port for this node.
   - `port`: The TCP port for this node.
+  - `nodeKey`: a secret key used for generating libp2p peer identifier. Optional.
   - `basePath`: The directory used for the blockchain db and other outputs. When unspecified, we use
     `--tmp`.
   - `flags`: Any additional command line flags you want to add when starting your node.
@@ -80,10 +90,10 @@ An example of `genesis` is:
 "genesis": {
   "runtime": {
     "runtime_genesis_config": {
-      "parachainsConfiguration": {
+      "configuration": {
         "config": {
-          "validation_upgrade_frequency": 1,
-          "validation_upgrade_delay": 1
+          "validation_upgrade_frequency": 10,
+          "validation_upgrade_delay": 10
         }
       },
       "palletCollective": {
@@ -108,7 +118,7 @@ All `genesis` properties can be found in the chainspec output:
 - `bin`: The path of the [collator node
   binary](https://github.com/substrate-developer-hub/substrate-parachain-template) used to create
   blocks for your parachain. For example
-  `<path/to/substrate-parachain-template>/target/release/polkadot-collator`.
+  `<path/to/substrate-parachain-template>/target/release/polkadot-parachain`.
 - `id`: The id to assign to this parachain. Must be unique.
 - `wsPort`: The websocket port for this node.
 - `port`: The TCP port for this node.
@@ -193,11 +203,13 @@ polkadot-launch wait for finalization.
 This tool just automates the steps needed to spin up multiple relay chain nodes and parachain nodes
 in order to create a local test network.
 
+You can add the `-v` or `--verbose` flag to see what processes it is invoking and with which arguments.
+
 - [`child_process`](https://nodejs.org/api/child_process.html) is used to execute commands on your
   node:
   - We build a fresh chain spec using the `chain` parameter specified in your config.
     - Includes the authorities you specified.
-    - Includes changes to the `parachainsConfiguration`.
+    - Includes changes to the `paras`.
     - Includes parachains you have added.
       - `wasm` is generated using the `<node> export-genesis-wasm` subcommand.
       - `header` is retrieved by calling `api.rpc.chain.getHeader(genesis_hash)`.
@@ -225,7 +237,7 @@ yarn
 Start the application with:
 
 ```bash
-yarn start bifrost.json
+yarn start config.json
 ```
 
 When you have finished your changes, make a [pull
